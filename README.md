@@ -10,7 +10,7 @@ O aluno só consegue fazer uma reserva se tiver cadastrado e logado
 ## Rodando a aplicação localmente
 
 - Crie uma virtual env [Docs](https://docs.python.org/pt-br/3/library/venv.html)
-- Rode o comando `pip install > requirements.txt`
+- Rode o comando `pip install -r requirements.txt`
 - Rode o comando `python3 manage.py migrate` para criar o banco local (SQLite)
 - Rode o comando `python3 manage.py createsuperuser` para criar o cadastro do aluno no banco
 - Esolha um usuário e uma senha, eles serão usados para fazer o login na aplicação
