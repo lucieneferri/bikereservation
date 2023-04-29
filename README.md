@@ -18,4 +18,8 @@ O aluno só consegue fazer uma reserva se tiver cadastrado e logado
 - Acesse `localhost:8000` para ver a aplicação rodar
 - Use o usuário e senha cadastrados previamente para conseguir acessar o sistema
 
+## Populando o banco de dados
+
+- Rode o comando `python3 manage.py populate_bikes` para popular a tabela de bicicletas.
+
 Projeto em construção...
