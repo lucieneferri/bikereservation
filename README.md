@@ -23,3 +23,8 @@ O aluno só consegue fazer uma reserva se tiver cadastrado e logado
 - Rode o comando `python3 manage.py populate_bikes` para popular a tabela de bicicletas.
 
 Projeto em construção...
+
+POST /bikes/34/reservation 
+
+user_id
+date

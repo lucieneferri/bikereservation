@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from reservation.models import SpinningBike, Reservation
+from django.http.request import HttpRequest
+
 
 @login_required
 def home(requests):
@@ -22,3 +24,11 @@ def available_bikes(requests):
     )
     context = {'available_bikes': available_bikes, 'date': date}
     return render(requests, 'home.html', context)
+
+@login_required
+def reservation(requests: HttpRequest, bike_id):
+    date = requests.POST["date"]
+    user_id = requests.user.id
+    Reservation.objects.create(reservation_date=date, bike_id=bike_id, user_id=user_id)
+
+    return render(requests, 'reservation.html')
