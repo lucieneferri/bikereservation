@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from reservation.models import SpinningBike, Reservation
 from django.http.request import HttpRequest
@@ -26,9 +26,17 @@ def available_bikes(requests):
     return render(requests, 'home.html', context)
 
 @login_required
-def reservation(requests: HttpRequest, bike_id):
+def create_reservation(requests: HttpRequest, bike_id):
     date = requests.POST["date"]
     user_id = requests.user.id
     Reservation.objects.create(reservation_date=date, bike_id=bike_id, user_id=user_id)
 
-    return render(requests, 'reservation.html')
+    return redirect("reservations")
+
+@login_required
+def list_reservations(requests):
+    user_id = requests.user.id
+    reservations = Reservation.objects.filter(user_id=user_id)
+
+    context = {'reservations':reservations}
+    return render(requests, 'reservation.html', context)
