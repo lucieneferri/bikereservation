@@ -1,0 +1,14 @@
+<!-- reservations.html -->
+{% block content %}
+  <h1>Suas Reservas</h1>
+  
+  {% if reservations %}
+    <ul>
+      {% for reservation in reservations %}
+        <li>{{ reservation }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Você ainda não fez nenhuma reserva.</p>
+  {% endif %}
+{% endblock %}

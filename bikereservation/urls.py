@@ -9,6 +9,6 @@ urlpatterns = [
     path('pagina2/', views.pagina2, name='pagina2'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('available_bikes/', views.available_bikes, name='available_bikes'),
-    path('reservation/', views.reservation, name='reservation'),
-    path('reservations/', views.reservations, name='reservations')
+    path('reservation/', views.create_reservation, name='create_reservation'),
+    path('reservations/', views.list_reservations, name='list_reservations')
 ]

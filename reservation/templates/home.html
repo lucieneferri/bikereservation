@@ -6,6 +6,7 @@
   <form method="get" action="{% url 'available_bikes' %}">
     <div class="form-group">
       <label for="date">Filtrar por Data</label>
+      {% csrf_token %}
       <input type="datetime-local" name="date" id="date" class="form-control" value="{{ date }}">
     </div>
     <button type="submit" class="btn btn-primary">Listar Bikes</button>
@@ -14,11 +15,17 @@
   <ul class="list-group">
     {% for bike in available_bikes %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="badge badge-primary badge-pill">Bike {{ bike.bike_number }}</span>
+      <form method="post" action="{% url 'create_reservation' %}">
+        {% csrf_token %}
+        <input type="hidden" name="bike_id" value="{{ bike.id }}">
+        <input type="hidden" name="date" value="{{ date }}">
+        <button type="submit" class="btn btn-link badge badge-primary badge-pill">
+          Bike {{ bike.bike_number }}
+        </button>
+      </form>
     </li>
     {% empty %}
     <li class="list-group-item">Sem bikes disponíveis</li>
     {% endfor %}
   </ul>
-</div>
 {% endblock %}
