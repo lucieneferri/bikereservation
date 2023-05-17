@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from reservation.models import SpinningBike, Reservation
 from django.http.request import HttpRequest
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+from datetime import datetime
+from django.contrib.auth import get_user
 
 
 def home(requests):
@@ -18,7 +21,6 @@ def pagina2(requests):
 
 @login_required
 def available_bikes(requests):
-    # import ipdb;ipdb.set_trace()
     date = requests.GET.get('date')
     available_bikes = SpinningBike.objects.exclude(
         id__in=Reservation.objects.filter(reservation_date=date).values('bike_id')
@@ -28,18 +30,15 @@ def available_bikes(requests):
 
 @login_required
 def create_reservation(requests: HttpRequest):
-    # import ipdb;ipdb.set_trace()
-    user_id = requests.user.id
+    user = get_user(requests)
     date = requests.POST["date"]
-    bike_id = requests.POST["bike_id"]
-
-    # print("User ID:", user_id)
-    # print("Date:", date)
-    # print("Bike ID:", bike_id)
+    bike_id = int(requests.POST["bike_id"])
+    bike = SpinningBike.objects.get(id=bike_id)
 
     if date:
-        bike_id = requests.POST.get("bike_id")
-        Reservation.objects.create(reservation_date=date, bike_id=bike_id, user_id=user_id)
+        date_time = datetime.strptime(date, "%Y-%m-%dT%H:%M")
+        date_timezone = timezone.make_aware(date_time)
+        Reservation.objects.create(reservation_date=date_timezone, bike=bike, user=user)
     else:
         raise ValidationError({"date": "Você precisa selecionar uma data"})
 
