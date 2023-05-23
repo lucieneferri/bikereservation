@@ -2,13 +2,22 @@
 {% block content %}
   <h1>Suas Reservas</h1>
   
+  
   {% if reservations %}
     <ul>
-      {% for reservation in reservations %}
-        <li>{{ reservation }}</li>
+      {% for reservation in reservations %} 
+        <li>
+          {{ reservation }}
+          <form action="{% url 'cancel_reservation' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+            <button type="submit">Cancelar Reserva</button>
+          </form>
+        </li>
       {% endfor %}
     </ul>
   {% else %}
     <p>Você ainda não fez nenhuma reserva.</p>
   {% endif %}
 {% endblock %}
+

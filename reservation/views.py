@@ -51,3 +51,11 @@ def list_reservations(requests):
 
     context = {'reservations':reservations}
     return render(requests, 'reservation.html', context)
+
+
+def cancel_reservation(requests):
+    reservation_id = requests.POST["reservation_id"]
+    reservation = Reservation.objects.get(id=reservation_id)
+    reservation.delete()
+
+    return redirect("list_reservations")
