@@ -7,17 +7,9 @@ from django.utils import timezone
 from datetime import datetime
 from django.contrib.auth import get_user
 
-
+@login_required
 def home(requests):
     return render(requests, 'home.html')
-
-@login_required
-def pagina1(requests):
-    return render(requests, 'pagina1.html')
-
-@login_required
-def pagina2(requests):
-    return render(requests, 'pagina2.html')
 
 @login_required
 def available_bikes(requests):
@@ -52,7 +44,7 @@ def list_reservations(requests):
     context = {'reservations':reservations}
     return render(requests, 'reservation.html', context)
 
-
+@login_required
 def cancel_reservation(requests):
     reservation_id = requests.POST["reservation_id"]
     reservation = Reservation.objects.get(id=reservation_id)
