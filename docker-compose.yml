@@ -26,15 +26,7 @@ services:
       - db
     environment:
       DB_HOST: db
+    command: sh -c 'until nc -z db 3306; do sleep 1; done && python manage.py runserver 0.0.0.0:8000'
 
 volumes:
   db:
-
-
-
-
-# DOCKER                     HOST
-
-# X:3306  >>   127.0.0.1:3306 
-
-# Y:3306  >>   127.0.0.1:3306
