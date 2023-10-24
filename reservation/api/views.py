@@ -1,24 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from reservation.api.serializers import SpinningBikeSerializer
 from reservation.models import SpinningBike, Reservation
 from django.http.request import HttpRequest
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
 from django.contrib.auth import get_user
+from rest_framework.generics import ListAPIView
+
+class BikeListView(ListAPIView):
+    queryset = SpinningBike.objects.all()
+    serializer_class = SpinningBikeSerializer
 
 @login_required
 def home(requests):
     return render(requests, 'home.html')
-
-@login_required
-def available_bikes(requests):
-    date = requests.GET.get('date')
-    available_bikes = SpinningBike.objects.exclude(
-        id__in=Reservation.objects.filter(reservation_date=date).values('bike_id')
-    )
-    context = {'available_bikes': available_bikes, 'date': date}
-    return render(requests, 'home.html', context)
 
 @login_required
 def create_reservation(requests: HttpRequest):
